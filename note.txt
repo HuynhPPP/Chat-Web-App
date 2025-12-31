@@ -1,0 +1,30 @@
+📦 Front-end Packages:
+npm i react-router axios lucide-react tailwindcss @tailwindcss/vite tailwindcss-animate zustand zod react-hook-form @hookform/resolvers sonner
+
+npm i -D @types/node
+
+Ui - shadcn:
+- npx shadcn@latest add sidebar-08
+- npx shadcn@latest add switch badge dialog textarea popover
+
+UI - Scrollbar:
+- npm i tailwind-scrollbar
+
+UI - Emoji Picker:
+- npm install --save emoji-mart @emoji-mart/data @emoji-mart/react --legacy-peer-deps
+
+Socket IO
+- npm i socket.io-client
+
+Scroll
+npm i react-infinite-scroll-component
+
+📦 Back-end Packages:
+npm init -y ( Tạo package.json )
+
+npm i express cors mongoose dotenv
+
+node -i D nodemon
+
+Socket IO
+- npm i socket.io 
