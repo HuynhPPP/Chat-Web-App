@@ -5,6 +5,8 @@ import { create } from 'zustand';
 
 export const useFriendStore = create<FriendState>((set) => ({
   loading: false,
+  receivedList: [],
+  sentList: [],
   searchByUsername: async (username) => {
     try {
       set({ loading: true });
@@ -32,6 +34,54 @@ export const useFriendStore = create<FriendState>((set) => ({
 
       toast.error(errorMessage);
       throw new Error(errorMessage);
+    } finally {
+      set({ loading: false });
+    }
+  },
+  getAllFriendRequests: async () => {
+    try {
+      set({ loading: true });
+      const result = await friendService.getAllFriendRequests();
+
+      if (!result) return;
+
+      const { received, sent } = result;
+
+      set({ receivedList: received, sentList: sent });
+    } catch (error) {
+      console.error('Lỗi xảy ra khi getAllFriendRequests', error);
+    } finally {
+      set({ loading: false });
+    }
+  },
+  acceptFriendRequest: async (requestId) => {
+    try {
+      set({ loading: true });
+      await friendService.acceptFriendRequest(requestId);
+
+      set((state) => ({
+        receivedList: state.receivedList.filter(
+          (request) => request._id !== requestId
+        ),
+      }));
+    } catch (error) {
+      console.error('Lỗi xảy ra khi acceptFriendRequest:', error);
+    } finally {
+      set({ loading: false });
+    }
+  },
+  declineFriendRequest: async (requestId) => {
+    try {
+      set({ loading: true });
+      await friendService.declineFriendRequest(requestId);
+
+      set((state) => ({
+        receivedList: state.receivedList.filter(
+          (request) => request._id !== requestId
+        ),
+      }));
+    } catch (error) {
+      console.error('Lỗi xảy ra khi declineFriendRequest:', error);
     } finally {
       set({ loading: false });
     }
