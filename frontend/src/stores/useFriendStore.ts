@@ -4,6 +4,7 @@ import { toast } from 'sonner';
 import { create } from 'zustand';
 
 export const useFriendStore = create<FriendState>((set) => ({
+  friends: [],
   loading: false,
   receivedList: [],
   sentList: [],
@@ -82,6 +83,20 @@ export const useFriendStore = create<FriendState>((set) => ({
       }));
     } catch (error) {
       console.error('Lỗi xảy ra khi declineFriendRequest:', error);
+    } finally {
+      set({ loading: false });
+    }
+  },
+  getFriends: async () => {
+    try {
+      set({ loading: true });
+      const friends = await friendService.getFriendList();
+      if (!friends) return;
+
+      set({ friends: friends });
+    } catch (error) {
+      console.error('Lỗi xảy ra khi getFriends', error);
+      set({ friends: [] });
     } finally {
       set({ loading: false });
     }

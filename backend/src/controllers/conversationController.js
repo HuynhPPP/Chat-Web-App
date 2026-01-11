@@ -1,6 +1,7 @@
 import Conversation from '../models/Conversation.js';
 import Message from '../models/Message.js';
 import { getIO } from '../libs/socket.js';
+import { io } from '../socket/index.js';
 
 export const createConversation = async (req, res) => {
   try {
@@ -70,7 +71,25 @@ export const createConversation = async (req, res) => {
       },
     ]);
 
-    return res.status(201).json(conversation);
+    const participants = conversation.participants.map((p) => ({
+      _id: p.userId?._id,
+      displayName: p.userId?.displayName,
+      avatarUrl: p.userId?.avatarUrl ?? null,
+      joinedAt: p.joinedAt,
+    }));
+
+    const formatted = {
+      ...conversation.toObject(),
+      participants,
+    };
+
+    if (type === 'group') {
+      memberIds.forEach((userId) => {
+        io.to(userId).emit('new-group', formatted);
+      });
+    }
+
+    return res.status(201).json({ conversation: formatted });
   } catch (error) {
     console.error('Lỗi khi tạo cuộc trò chuyện:', error);
     return res.status(500).json({ message: 'Lỗi hệ thống' });
