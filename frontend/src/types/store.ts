@@ -8,6 +8,7 @@ export interface AuthState {
   loading: boolean;
 
   setAccessToken: (accessToken: string) => void;
+  setUser: (user: User) => void;
   clearState: () => void;
 
   signUp: (
@@ -89,4 +90,10 @@ export interface FriendState {
   acceptFriendRequest: (requestId: string) => Promise<void>;
   declineFriendRequest: (requestId: string) => Promise<void>;
   getFriends: () => Promise<void>;
+}
+
+export interface UserState {
+  uploadAvatarUrl: (
+    formData: FormData
+  ) => Promise<{ success: boolean; message?: string }>;
 }

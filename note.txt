@@ -28,3 +28,6 @@ node -i D nodemon
 
 Socket IO
 - npm i socket.io 
+
+npm i cloudinary multer
+npm i  multer (Đọc file gửi lên từ resquest)
