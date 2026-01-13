@@ -1,13 +1,13 @@
-import { SignInform } from "@/components/auth/signin-form";
+import { SignInform } from '@/components/features/auth/signin-form';
 
 const SignInPage = () => {
   return (
-    <div className="bg-muted flex min-h-svh flex-col items-center justify-center p-6 md:p-10 absolute inset-0 z-index bg-gradient-purple">
-      <div className="w-full max-w-sm md:max-w-4xl">
+    <div className='bg-muted flex min-h-svh flex-col items-center justify-center p-6 md:p-10 absolute inset-0 z-index bg-gradient-purple'>
+      <div className='w-full max-w-sm md:max-w-4xl'>
         <SignInform />
       </div>
     </div>
   );
-}
+};
 
-export default SignInPage
+export default SignInPage;
